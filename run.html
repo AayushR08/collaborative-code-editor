@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Run Code</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+    }
+
+    select, textarea, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+    }
+
+    #output {
+      white-space: pre-wrap;
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Run Your Code</h1>
+
+  <select id="language">
+    <option value="javascript">JavaScript</option>
+    <option value="python">Python</option>
+    <option value="php">PHP</option>
+  </select>
+
+  <textarea id="code" rows="10" placeholder="Write your code here..."></textarea>
+  <button id="runBtn">Run</button>
+
+  <h3>Output:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    const runBtn = document.getElementById('runBtn');
+    const output = document.getElementById('output');
+
+    runBtn.addEventListener('click', async () => {
+      const code = document.getElementById('code').value;
+      const language = document.getElementById('language').value;
+
+      output.textContent = 'Running...';
+
+      try {
+        const res = await fetch('/run', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ code, language })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          output.textContent = data.output || '(No output)';
+        } else {
+          output.textContent = `Error: ${data.error}\n${data.stderr || ''}`;
+        }
+      } catch (err) {
+        output.textContent = 'Error contacting server';
+      }
+    });
+  </script>
+</body>
+</html>

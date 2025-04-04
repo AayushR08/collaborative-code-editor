@@ -1,0 +1,472 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: white;
+    padding: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+.room-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#copy-room-btn {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+#copy-room-btn:hover {
+    background-color: #666;
+}
+
+/* Toolbar */
+.toolbar {
+    background-color: #444;
+    color: white;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-operations, .run-options {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.toolbar button {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.toolbar button:hover {
+    background-color: #666;
+}
+
+.file-tabs {
+    display: flex;
+    flex-grow: 1;
+    overflow-x: auto;
+    margin: 0 1rem;
+}
+
+.file-tab {
+    padding: 0.3rem 0.8rem;
+    background-color: #555;
+    color: white;
+    border-radius: 4px 4px 0 0;
+    margin-right: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.file-tab.active {
+    background-color: #2196F3;
+}
+
+.file-tab .close-tab {
+    font-size: 0.8rem;
+    margin-left: 0.3rem;
+    opacity: 0.7;
+}
+
+.file-tab .close-tab:hover {
+    opacity: 1;
+}
+
+/* Main content area */
+.main-content {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    overflow-y: auto;
+}
+
+.join-section, .users-section, .language-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+input, select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 0.5rem;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #3367d6;
+}
+
+#users-list {
+    list-style: none;
+}
+
+#users-list li {
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-cursor {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.read-only-badge {
+    font-size: 0.7rem;
+    background-color: #f44336;
+    color: white;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    margin-left: auto;
+}
+
+/* Editor */
+.editor-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#editor {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+/* Result panel */
+.execution-result {
+    max-height: 200px;
+    background-color: #282c34;
+    color: #abb2bf;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.execution-result.show {
+    display: flex;
+}
+
+.result-header {
+    padding: 0.5rem;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#clear-result-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+#result-output {
+    padding: 0.5rem;
+    overflow: auto;
+    flex-grow: 1;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.editor-status {
+    padding: 0.5rem;
+    background-color: #eee;
+    border-top: 1px solid #ddd;
+    font-size: 0.9rem;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Chat */
+.chat-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: white;
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(300px);
+    transition: transform 0.3s ease;
+}
+
+.chat-container.open {
+    transform: translateX(0);
+}
+
+.chat-toggle {
+    position: absolute;
+    right: 300px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.chat-header {
+    padding: 0.8rem;
+    background-color: #4285f4;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 0.5rem;
+    overflow-y: auto;
+}
+
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+}
+
+.chat-input button {
+    padding: 0.5rem 1rem;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+.run-button {
+    background-color: #16a34a;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .output {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .output.hidden,
+  .loader.hidden,
+  .error-box.hidden {
+    display: none;
+  }
+  
+  .loader {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #16a34a;
+  }
+  
+  .error-box {
+    background-color: #dc2626;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+/* === Dark Opium Theme Enhancements === */
+
+body {
+    background: radial-gradient(ellipse at top, #1c1c1c, #000);
+    color: #eaeaea;
+}
+
+header, .toolbar, .result-header, .chat-header {
+    background: linear-gradient(to right, #2a2a2a, #1a1a1a);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+header h1, .toolbar button, .file-tab, .chat-toggle {
+    color: #d1c4e9;
+}
+
+.toolbar button, .file-tab, .chat-toggle {
+    background: linear-gradient(to bottom, #333, #222);
+    border: 1px solid #555;
+    transition: all 0.3s ease;
+}
+
+.toolbar button:hover, .file-tab:hover, .chat-toggle:hover {
+    background: linear-gradient(to bottom, #444, #2a2a2a);
+    color: #b388ff;
+}
+
+.file-tab.active {
+    background: #6a1b9a;
+    color: white;
+}
+
+.sidebar {
+    background: #1f1f1f;
+    color: #ccc;
+    border-right: 1px solid #333;
+}
+
+input, select {
+    background: #2c2c2c;
+    border: 1px solid #444;
+    color: #eee;
+}
+
+button {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(106, 27, 154, 0.3);
+}
+
+button:hover {
+    background-color: #8e24aa;
+}
+
+.execution-result {
+    background: #121212;
+    color: #d1c4e9;
+}
+
+.editor-status {
+    background-color: #1c1c1c;
+    border-top: 1px solid #333;
+}
+
+.chat-container {
+    background: #1c1c1c;
+    color: #f3e5f5;
+    border-left: 1px solid #333;
+}
+
+.chat-input input {
+    background: #292929;
+    color: #fff;
+}
+
+.chat-input button {
+    background-color: #8e24aa;
+}
+
+.user-cursor {
+    border: 2px solid #8e24aa;
+}
+
+/* Glow effect */
+.glow-effect {
+    text-shadow: 0 0 5px #bb86fc, 0 0 10px #bb86fc, 0 0 20px #bb86fc;
+}
+
+/* Optional: Glow on headers or interactive text */
+header h1, .chat-header {
+    font-weight: bold;
+    text-shadow: 0 0 5px #8e24aa;
+}
